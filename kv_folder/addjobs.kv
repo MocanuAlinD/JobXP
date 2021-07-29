@@ -1,0 +1,117 @@
+<AddField@MDTextField>:
+    multiline: False
+    color_mode: 'custom'
+    line_color_focus: 1,1,1,0.8
+    line_color_normal: 1,1,1,0.8
+    current_hint_text_color: 1,1,1,0.8
+
+<AddJobs>:
+    title: app.language['addjobstitle']
+    auto_dismiss: False
+    separator_color: app.theme_cls.primary_color
+    size_hint: 1, None
+    height: grid1.height+grid2.height+grid4.height+grid4.height*2+dp(5)
+    background_color: (0,0,0, 0.85)
+    MDGridLayout:
+        rows: 4
+        size: root.size
+        pos: root.pos
+        spacing: dp(5)
+        padding: ['5dp','5dp','35dp','5dp']
+        canvas:
+            Color:
+                rgb: app.toolbar_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        MDBoxLayout:
+            id: grid1
+            spacing: '40dp'
+            size_hint_y: None
+            height: add_day.height+dp(3)
+
+            AddField:
+                id: add_day
+                text: app.add_day
+                hint_text: app.language['addjobs_adddayhinttext']
+                helper_text: app.language['addjobs_adddayhinttext']
+                size_hint_x: None
+                width: '40dp'
+                input_filter: 'int'
+                on_text_validate: add_month.focus=True
+            AddField:
+                id: add_month
+                text: app.add_month
+                hint_text: app.language['addjobs_addmonthhinttext']
+                helper_text: app.language['addjobs_addmonthhinttext']
+                size_hint_x: None
+                width: '40dp'
+                input_filter: 'int'
+                on_text_validate: add_year.focus=True
+            AddField:
+                id: add_year
+                text: app.add_year
+                hint_text: app.language['addjobs_addyearhinttext']
+                helper_text: app.language['addjobs_addyearhinttext']
+                size_hint_x: None
+                width: '40dp'
+                input_filter: 'int'
+                on_text_validate: add_city.focus=True
+        MDGridLayout:
+            id:grid2
+            rows: 5
+            size_hint: 1,None
+            height: add_city.height*5+dp(3)
+            AddField:
+                id: add_city
+                hint_text: app.language['addjobs_addcity']
+                max_text_length: 50
+                on_text_validate: add_amount.focus=True
+            AddField:
+                id: add_amount
+                hint_text: app.language['addjobs_addamount']
+                max_text_length: 10
+                input_filter: 'float'
+                on_text_validate: add_address.focus=True
+            AddField:
+                id: add_address
+                hint_text: app.language['addjobs_addadress']
+                max_text_length: 50
+                on_text_validate: add_person.focus=True
+            AddField:
+                id: add_person
+                hint_text: app.language['addjobs_addperson']
+                max_text_length: 15
+                on_text_validate: add_upfront.focus=True
+            AddField:
+                id: add_upfront
+                hint_text: app.language['addjobs_addupfront']
+                max_text_length: 10
+                input_filter: 'int'
+        MDSeparator:
+        MDGridLayout:
+            id: grid4
+            rows: 1
+            size_hint: 1, None
+            height: addButton.height+dp(5)
+            MDRectangleFlatButton:
+                text: app.language['addjobs_closeButton']
+                pos_hint: {'x':0, 'y':0}
+                theme_text_color: 'Custom'
+                text_color: 1,1,1,0.8
+                on_release: root.dismiss()
+            Widget:
+            MDRaisedButton:
+                id: addButton
+                text: app.language['addjobs_addButton']
+                pos_hint: {'right':1, 'y':0}
+                theme_text_color: 'Custom'
+                text_color: 1,1,1,0.8
+                md_bg_color: app.bg_color
+                on_release:
+                    root.write_to_lucrari(add_day.text,add_month.text,add_year.text,add_city.text,add_amount.text, add_address.text,add_person.text,add_upfront.text)
+                    add_amount.text=''
+                    add_city.text=''
+                    add_address.text=''
+                    add_person.text=''
+                    add_upfront.text=''

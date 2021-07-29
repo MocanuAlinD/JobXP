@@ -1,0 +1,154 @@
+<MDT@MDTextField>:
+    color_mode: 'custom'
+    line_color_focus: 1,1,1,0.8
+    line_color_normal: 1,1,1,0.8
+    current_hint_text_color: 1,1,1,0.8
+
+<EditJobs>:
+    nr_to_edit:nr_to_edit
+    edit_index:edit_index
+    edit_address:edit_address
+
+    edit_date_day:edit_date_day
+    edit_date_month:edit_date_month
+    edit_date_year:edit_date_year
+
+    edit_city:edit_city
+    edit_amount:edit_amount
+    edit_person:edit_person
+    edit_upfront:edit_upfront
+    title: app.language['editjobs_title']
+    auto_dismiss: False
+    size_hint: 1, None
+    height: grid_0.height+dp(65)
+    background_color: (0,0,0, 0.85)
+    MDGridLayout:
+        id: grid_0
+        rows: 10
+        size_hint: 1, None
+        height: grid_1.height+grid_2.height+grid_3.height+dp(10)
+        padding: ['10dp',0,'20dp',0]
+        canvas:
+            Color:
+                rgb: app.toolbar_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        MDGridLayout:
+            id: grid_1
+            rows: 1
+            size_hint: 1,None
+            height: nr_to_edit.height
+
+            MDIconButton:
+                id: button_arrow_left
+                icon: 'arrow-left'
+                theme_text_color: "Custom"
+                text_color: app.green
+                disabled: True
+                on_release: nr_to_edit.text=str(int(nr_to_edit.text)-1)
+
+            MDT:
+                id: nr_to_edit
+                text: ''
+                multiline: False
+                input_filter: 'int'
+                halign: 'center'
+                hint_text: app.language['editjobs_nrToEdit_hint']
+                hint_text: '{} {} - {} {}'.format(app.language['first'], root.first, app.language['last'], root.last)
+                on_text: root.add_to_fields()
+	                
+            MDIconButton:
+                id: button_arrow_right
+                icon: 'arrow-right'
+                theme_text_color: "Custom"
+                text_color: app.green
+                disabled: True
+                on_release: nr_to_edit.text=str(int(nr_to_edit.text)+1)
+        MDGridLayout:
+            id: grid_2
+            rows: 7
+            size_hint: 1,None
+            height: edit_index.height*7
+            MDT:
+                id: edit_index
+                multiline: False
+                hint_text: 'index'
+                max_text_length: 10
+                readonly: True
+            MDGridLayout:
+                rows: 1
+                spacing: dp(10)
+                MDT:
+                    id: edit_date_day
+                    multiline: False
+                    hint_text: app.language['addjobs_adddayhinttext']
+                    size_hint: 0.25,1
+                MDT:
+                    id: edit_date_month
+                    multiline: False
+                    hint_text: app.language['addjobs_addmonthhinttext']
+                    size_hint: 0.25,1
+                MDT:
+                    id: edit_date_year
+                    multiline: False
+                    hint_text: app.language['addjobs_addyearhinttext']
+            MDT:
+                id: edit_city
+                multiline: False
+                hint_text: app.language['addjobs_addcity']
+                max_text_length: 50
+            MDT:
+                id: edit_amount
+                multiline: False
+                hint_text: app.language['addjobs_addamount']
+                max_text_length: 10
+                input_filter: 'int'
+            MDT:
+                id: edit_address
+                multiline: False
+                hint_text: app.language['addjobs_addadress']
+                max_text_length: 50
+            MDT:
+                id: edit_person
+                multiline: False
+                hint_text: app.language['addjobs_addperson']
+                max_text_length: 15
+            MDT:
+                id: edit_upfront
+                multiline: False
+                hint_text: app.language['addjobs_addupfront']
+                max_text_length: 10
+                input_filter: 'int'
+        MDGridLayout:
+            id:grid_3
+            cols:4
+            size_hint: 1,None
+            height: cancel_button_edit.height
+            spacing: dp(5)
+            padding: dp(5)
+            MDRectangleFlatButton:
+                id: cancel_button_edit
+                text: app.language['cancel']
+                theme_text_color: 'Custom'
+                text_color: 1,1,1,0.8
+                on_release: root.dismiss()
+            Label:
+                text: '{}'.format(root.last_saved)
+            MDRaisedButton:
+            	id: remove_button
+                text: app.language['remove']
+                theme_text_color: 'Custom'
+                text_color: 1,1,1,0.8
+                md_bg_color: app.bg_color
+                disabled: True
+                on_release: root.remove_jobs()
+            MDRaisedButton:
+                id: save_button_jobs
+                text: app.language['save']
+                theme_text_color: 'Custom'
+                text_color: 1,1,1,0.8
+                md_bg_color: app.bg_color
+                on_release:
+                    root.edit_jobs(nr_to_edit.text,edit_date_year.text,edit_date_month.text,edit_date_day.text,edit_city.text,edit_amount.text,edit_address.text,edit_person.text,edit_upfront.text)
+                    

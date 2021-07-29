@@ -1,0 +1,89 @@
+# popup - export to csv
+<Jobs_Export>:
+    title: app.language['export_to_email']
+    size_hint: 1, None
+    height: id_jobs_mail.height*7
+    background_color: (0,0,0, 0.85)
+    auto_dismiss: False
+    MDGridLayout:
+        rows: 7
+        cols: 1
+        canvas:
+            Color:
+                rgb: app.toolbar_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        MDTextField:
+            id: id_jobs_mail
+            hint_text: app.language['type_email_hint']
+            text: 'your email here'
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+            on_text_validate: id_jobs_pass.focus=True
+
+        MDTextField:
+            id: id_jobs_pass
+            hint_text: app.language['type_password_hint']
+            text: 'your password here'
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+            on_text_validate: id_jobs_sendto.focus=True
+        
+        MDTextField:
+            id: id_jobs_sendto
+            hint_text: app.language['send_to']
+            text: 'email to send'
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+            on_text_validate: id_jobs_subject.focus=True
+
+        MDTextField:
+            id: id_jobs_subject
+            hint_text: app.language['subject']
+            text: app.language['jobspage_BackUpComplete']
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+            on_text_validate: id_jobs_content.focus=True
+
+        MDTextField:
+            id: id_jobs_content
+            hint_text: app.language['content']
+            text: app.language['nothing']
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+        MDGridLayout:
+            rows: 1
+            size_hint: 1, None
+            height: self.minimum_height
+            padding: '10dp',0
+            MDRaisedButton:
+                id: id_but_jobs
+                text: app.language['export']
+                on_release: root.send_to_email(id_jobs_mail.text, id_jobs_pass.text, id_jobs_sendto.text, id_jobs_subject.text, id_jobs_content.text)
+            BoxLayout:
+                orientation: 'vertical'
+                CheckBox:
+                    id: check_db
+                    active: False
+                Label:
+                    text: app.language['include_DB']
+            MDRectangleFlatButton:
+                text: app.language['close']
+                pos_hint: {'right':1, 'y':0}
+                on_release: root.dismiss()

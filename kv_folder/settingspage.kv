@@ -1,0 +1,68 @@
+<SettingsPage>:
+    name: 'settings_page'
+    MDGridLayout:
+        cols: 1
+        size: root.size
+        pos: root.pos
+        padding: [dp(20),dp(0),dp(20),dp(20)]
+        spacing: dp(20)
+        row_force_default: True
+        row_default_height: new_cash.height
+        canvas:
+            Color:
+                rgb: app.toolbar_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        MDIconButton:
+            icon: 'arrow-left'
+            theme_text_color: 'Custom'
+            text_color: app.white
+            on_release: app.root.ids.idjobspage.change_screens('main_page')
+        MDGridLayout:
+            rows:1
+            size: root.size
+            pos: root.pos
+            padding: [dp(0),dp(0),dp(0),dp(20)]
+            spacing: dp(10)
+            canvas:
+                Color:
+                    rgb: app.toolbar_color
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            MDTextField:
+                id: new_cash
+                input_filter: 'float'
+                size_hint_x: None
+                size_hint_y: None
+                width: root.width/2
+                max_height: self.height
+                hint_text: app.language['settingspage_newCash']
+                multiline: False
+                color_mode: 'custom'
+                line_color_focus: 1,1,1,0.8
+                line_color_normal: 1,1,1,0.8
+                current_hint_text_color: 1,1,1,0.8
+                on_text_validate: root.change_cash(self.text)
+            MDRaisedButton:
+                text: app.language['settingspage_changeButton']
+                size_hint_y: None
+                height: self.height
+                on_release: root.change_cash(new_cash.text)
+
+
+        MDRectangleFlatIconButton:
+            id: db_button
+            icon: 'database'
+            text: app.language['settingspage_clearJobsDB']
+            line_color: 0,0,0,0
+            on_release: root.clear_DB('jobs_table')
+        MDRectangleFlatIconButton:
+            icon: 'database'
+            text: app.language['settingspage_clearExpDB']
+            line_color: 0,0,0,0
+            on_release: root.clear_DB('exp_table')
+        Widget:
+
+

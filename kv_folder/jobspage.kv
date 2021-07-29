@@ -1,0 +1,225 @@
+<JobsPage>:
+    name: 'jobs_page'
+    id: idjobspage
+    rv:rv
+    MDFloatLayout:
+        size: root.size
+        pos: root.pos
+        md_bg_color: 1,1,1,1
+        canvas:
+            Color:
+                rgb: app.fg_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: [0,0,0,10]
+        MDToolbar:
+            id: tlb
+            title: app.language['jobsPage_title']
+            md_bg_color: app.toolbar_color
+            left_action_items: [['arrow-left', lambda x: root.change_screens('main_page')],['menu', lambda x: nav_drawer.set_state()]]
+            right_action_items: [['arrow-up', lambda x: root.reverse_order('DESC')],['arrow-down', lambda x: root.reverse_order('ASC')]]
+            elevation: 10
+
+        RecycleView:
+            id:rv
+            scroll_type: ['bars', 'content']
+            scroll_wheel_distance: dp(114)
+            bar_width: dp(15)
+            viewclass: 'Alin'
+
+            RecycleBoxLayout:
+                id: recicle
+                default_size: 1, None
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                spacing: dp(3)
+
+    MDNavigationDrawer:
+        canvas:
+            Color:
+                rgb: app.toolbar_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        id: nav_drawer
+        close_on_click: True
+        elevation: 10
+        width: sep.width+20 if root.width<root.height else sep.width+20
+        wid: sep.width
+        ScrollView:
+
+            GridLayout:
+                id: grdgrd
+                cols: 1
+                size_hint_x: None
+                width: sep.width+20
+                spacing: 20
+                padding: 10
+                sep1: sep.width
+                md_bg_color: 1,1,1,0
+
+                Image:
+                    source: 'images/wallet.png'
+                    size_hint: None, None
+                    width: sep.width
+                    height: self.width
+                    allow_stretch: True
+                    keep_ratio: False
+
+                MDSeparator:
+
+                MDRectangleFlatIconButton:
+                    text: app.language['search'].lower().capitalize()
+                    icon: 'magnify'
+                    theme_text_color: 'Custom'
+                    text_color: 1,1,1,0.8
+                    md_bg_color: app.fg_color
+                    size_hint: None,None
+                    width: sep.width
+                    height: self.height
+                    line_color: 0,0,0,0
+                    on_release: Factory.Search_jobs().open()
+
+                MDRectangleFlatIconButton:
+                    text: app.language['add'].lower().capitalize()
+                    text_halign: 'right'
+                    icon: 'content-save-edit'
+                    theme_text_color: 'Custom'
+                    text_color: 1,1,1,0.8
+                    md_bg_color: app.fg_color
+                    size_hint: None,None
+                    width: sep.width
+                    height: self.height
+                    line_color: 0,0,0,0
+                    on_release: Factory.AddJobs().open()
+
+                MDRectangleFlatIconButton:
+                    text: app.language['jobspage_editremove']
+                    icon: 'database-edit'
+                    theme_text_color: 'Custom'
+                    text_color: 1,1,1,0.8
+                    md_bg_color: app.fg_color
+                    size_hint: None,None
+                    width: sep.width
+                    height: self.height
+                    line_color: 0,0,0,0
+                    on_release: Factory.EditJobs().open()
+
+                MDRectangleFlatIconButton:
+                    text: app.language['jobspage_stats']
+                    icon: 'equalizer'
+                    theme_text_color: 'Custom'
+                    text_color: 1,1,1,0.8
+                    md_bg_color: app.fg_color
+                    size_hint: None,None
+                    width: sep.width
+                    height: self.height
+                    line_color: 0,0,0,0
+                    on_release: 
+                        root.manager.current='statspage'
+                        nav_drawer.set_state('close')
+
+                MDRectangleFlatIconButton:
+                    text: app.language['jobspage_sendToEmail']
+                    icon: 'email-send'
+                    theme_text_color: 'Custom'
+                    text_color: 1,1,1,0.8
+                    md_bg_color: app.fg_color
+                    line_color: 0,0,0,0
+                    size_hint: None,None
+                    width: sep.width
+                    height: self.height
+                    on_release: Factory.Jobs_Export().open()
+
+                MDSeparator:
+                    id: sep
+
+                MDRectangleFlatIconButton:
+                    icon: 'close-circle'
+                    text: app.language['jobspage_exit']
+                    theme_text_color: 'Custom'
+                    text_color: 1,1,1,0.8
+                    size_hint: None,None
+                    width: sep.width
+                    height: self.height
+                    on_release: app.stop()
+                GridLayout:
+                    rows: 1
+                    padding: [0, dp(10), 0, 0]
+                    Label:
+                        id: id_remaining_cash_jobs
+                        text: ''
+                        size_hint_y: self.height
+
+
+
+<Search_jobs>:
+    title: app.language['jobspage_search_DB']
+    auto_dismiss: True
+    txt_search:txt_search
+    rv_search:rv_search
+    size_hint: 1, 0.75
+    background_color: (0,0,0, 0.85)
+    MDGridLayout:
+        rows: 4
+        canvas:
+            Color:
+                rgb: app.toolbar_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        MDTextField:
+            id: txt_search
+            multiline: False
+            hint_text: app.language['jobspage_typeToSearch']
+            color_mode: 'custom'
+            line_color_normal: app.white
+            line_color_focus: app.white
+            current_hint_text_color: 1,1,1,0.8
+            halign: 'center'
+            on_text: root.find(self.text)
+        RecycleView:
+            id: rv_search
+            scroll_type: ['bars', 'content']
+            scroll_wheel_distance: dp(114)
+            bar_width: dp(15)
+            viewclass: 'Alin'
+
+            RecycleBoxLayout:
+                default_size: 1, None
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                spacing: dp(3)
+        MDSeparator:
+        MDBoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1,None
+            height: close_button_search.height+dp(10)
+            spacing: dp(5)
+            padding: dp(5)
+            MDRectangleFlatButton:
+                id: close_button_search
+                text: app.language['close']
+                theme_text_color: 'Custom'
+                text_color: 1,1,1,0.8
+                on_release: root.dismiss()
+            Label:
+                text: 'Results found: {}'.format(str(len(rv_search.data)))
+                text: '{}{}'.format(app.language['jobspage_resultsFind'],str(len(rv_search.data)))
+            MDFlatButton:
+                text: app.language['clear']
+                theme_text_color: 'Custom'
+                text_color: 1,1,1,0.8
+                md_bg_color: app.bg_color
+                on_release: 
+                    rv_search.data=[]
+                    txt_search.text=''
+

@@ -1,0 +1,206 @@
+<MDTxt@MDTextField>:
+    color_mode: 'custom'
+    line_color_focus: 1,1,1,0.8
+    line_color_normal: 1,1,1,0.8
+    current_hint_text_color: 1,1,1,0.8
+<Stats>:
+    name: 'statspage'
+    money_rv:money_rv
+    on_enter: root.separate('month')
+    canvas:
+        Color:
+            rgb: app.toolbar_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    MDGridLayout:
+        cols: 1
+        padding: dp(10)
+        spacing: dp(10)
+        MDIconButton:
+            id: flat_but
+            icon: 'arrow-left'
+            theme_text_color: 'Custom'
+            text_color: app.white
+            on_release: root.manager.current='jobs_page'
+        MDGridLayout:
+            rows: 1
+            size_hint_y: None
+            height: dp(250)
+            # height: 1
+            MDCard:
+                elevation: 12
+                size_hint: 1, 1
+                md_bg_color: 0,0,0,0
+                canvas:
+                    Color:
+                        rgb: app.fg_color
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(10)]
+                MDGridLayout:
+                    rows:5
+                    MDGridLayout:
+                        rows: 1
+                        size_hint: 1,0.1
+                    MDGridLayout:
+                        cols: 2
+                        size_hint: 1,0.2
+                        MDLabel:
+                            text: app.language['statspage_start']
+                            halign: 'center'
+                            theme_text_color: 'Custom'
+                            text_color: 1,1,1,0.8
+                            bold: True
+                        MDLabel:
+                            text: app.language['statspage_end']
+                            halign: 'center'
+                            theme_text_color: 'Custom'
+                            text_color: 1,1,1,0.8
+                            bold: True
+                    MDGridLayout:
+                        rows: 1
+                        size_hint: (1, 0.15)
+                        spacing: 10
+                        padding: [10,0,10,10]
+                        MDTxt:
+                            id: first_day
+                            input_filter: 'int'
+                            multiline: False
+                            hint_text: app.language['statspage_day']
+                            halign: 'center'
+                            on_text_validate: first_month.focus=True
+                        MDTxt:
+                            id: first_month
+                            input_filter: 'int'
+                            multiline: False
+                            hint_text: app.language['statspage_month']
+                            halign: 'center'
+                            size_hint_x: 1.2
+                            on_text_validate: first_year.focus=True
+                        MDTxt:
+                            id: first_year
+                            input_filter: 'int'
+                            multiline: False
+                            hint_text: app.language['statspage_year']
+                            halign: 'center'
+                            size_hint_x: 1.5
+                            on_text_validate: last_day.focus=True
+                        MDLabel:
+                            text: '-'
+                            halign: 'center'
+                            size_hint_x: 0.1
+                            theme_text_color: 'Custom'
+                            text_color: 1,1,1,1
+                        MDTxt:
+                            id: last_day
+                            input_filter: 'int'
+                            multiline: False
+                            hint_text: app.language['statspage_day']
+                            halign: 'center'
+                            on_text_validate: last_month.focus=True
+                        MDTxt:
+                            id: last_month
+                            input_filter: 'int'
+                            multiline: False
+                            hint_text: app.language['statspage_month']
+                            halign: 'center'
+                            on_text_validate: last_year.focus=True
+                        MDTxt:
+                            id: last_year
+                            input_filter: 'int'
+                            multiline: False
+                            hint_text: app.language['statspage_year']
+                            halign: 'center'
+                            size_hint_x: 1.5
+                    MDGridLayout:
+                        rows: 1
+                        size_hint: (1, 0.2)
+                        padding: [10,0,10,0]
+                        MDIconButton:
+                            icon: 'calendar'
+                            user_font_size: dp(30)
+                            size_hint_x: 0.7
+                            theme_text_color: 'Custom'
+                            text_color: 1,1,1,0.8
+                            on_release: root.show_date_picker_first()
+                        MDLabel:
+                            id: id_label_date
+                            text: '-----'
+                            halign: 'center'
+                            theme_text_color: 'Custom'
+                            text_color: 1,1,1,0.8
+                        MDIconButton:
+                            icon: 'calendar'
+                            user_font_size: dp(30)
+                            size_hint_x: 0.7
+                            theme_text_color: 'Custom'
+                            text_color: 1,1,1,0.8
+                            on_release: root.show_date_picker_last()
+                    MDGridLayout:
+                        rows: 1
+                        size_hint: (1, 0.2)
+                        padding: [10,10,10,10]
+                        Widget:
+                        MDRaisedButton:
+                            text: app.language['calculateButton']
+                            bold: True
+                            md_bg_color: app.bg_color
+                            on_release: root.total()
+                        Widget:
+        
+        MDGridLayout:
+            rows: 1
+            MDCard:
+                size_hint: 1, 0.2
+                md_bg_color: 1,1,1,0
+                canvas:
+                    Color:
+                        rgb: app.fg_color
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(10)]
+                RecycleView:
+                    id:money_rv
+                    scroll_type: ['bars', 'content']
+                    scroll_wheel_distance: dp(50)
+                    bar_width: dp(15) # latimea la scrollbar
+                    viewclass: 'Alin_money_jobs'
+
+                    RecycleBoxLayout:
+                        default_size: 1, None
+                        default_size_hint: 1, None
+                        size_hint_y: None
+                        height: self.minimum_height
+                        orientation: 'vertical'
+                        spacing: dp(3)
+        MDGridLayout:
+            cols: 3
+            rows: 1
+            orientation: 'horizontal'
+            size_hint: 1, None
+            height: dp(50)
+            padding: dp(10)
+            spacing: dp(10)
+            Button:
+                text: app.language['year']
+                background_normal: ''
+                background_color: app.bg_color
+                on_release: root.separate('year')
+            Button:
+                background_normal: ''
+                background_color: app.bg_color
+                text: app.language['month']
+                on_release: root.separate('month')
+            Button:
+                text: app.language['day']
+                background_normal: ''
+                background_color: app.bg_color
+                on_release: root.separate('day')
+
+            
+
+
+

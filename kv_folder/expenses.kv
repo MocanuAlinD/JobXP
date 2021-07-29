@@ -1,0 +1,965 @@
+<Check1@MDCheckbox>:
+    group: 'group1'
+
+<Check2@MDCheckbox>:
+    group: 'group2'
+
+<Check3@MDCheckbox>:
+    group: 'group3'
+
+<MDTF@MDTextField>:
+    multiline: False
+    color_mode: 'custom'
+    line_color_focus: 1,1,1,0.8
+    line_color_normal: 1,1,1,0.8
+    current_hint_text_color: 1,1,1,0.8
+
+<Tab>:
+    font_name: 'font/Monaco.ttf'
+    text_color_normal: 0,1,0,1
+    text_color_active: 1,0,0,1
+
+<Expenses>:
+    name: 'expenses_page'
+    exp_rv: exp_rv
+    all_rv:all_rv
+    search_exp_rv: search_exp_rv
+    on_enter: root.add_data('dt','desc')
+    MDBoxLayout:
+        orientation: 'vertical'
+        canvas:
+            Color:
+                rgb: app.fg_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        MDToolbar:
+            title: app.language['expenses_title']
+            md_bg_color: app.toolbar_color
+            left_action_items: [['arrow-left', lambda x: app.root.ids.idjobspage.change_screens('main_page')]]
+
+        MDTabs:
+            tab_bar_height: dp(30)
+            background_color: app.toolbar_color
+            color_indicator: app.green
+            font_name: 'font/Monaco.ttf'
+            font_size: sp(5)
+            bold: True
+            text_color_normal: app.white
+            text_color_active: app.green
+            
+            Tab:
+                text: app.language['add']
+                MDFloatLayout:
+                    size: root.size
+                    pos: root.pos
+                    MDCard:
+                        size_hint: 0.95,0.3
+                        pos_hint: {'center_x': 0.5, 'top':0.97}
+                        md_bg_color: 0,0,0,0
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        MDGridLayout:
+                            rows: 6
+                            padding: [dp(10),dp(0),dp(10),dp(0)]
+                            MDGridLayout:
+                                rows: 1
+                                spacing: 25
+                                padding: 5
+                                MDTextField:
+                                    id: id_exp_day
+                                    hint_text: app.language['addjobs_adddayhinttext']
+                                    multiline: False
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    input_filter: 'int'
+                                    on_text_validate: id_exp_month.focus=True
+                                MDTextField:
+                                    id: id_exp_month
+                                    hint_text: app.language['addjobs_addmonthhinttext']
+                                    multiline: False
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    input_filter: 'int'
+                                    on_text_validate: id_exp_year.focus=True
+                                MDTextField:
+                                    id: id_exp_year
+                                    hint_text: app.language['addjobs_addyearhinttext']
+                                    multiline: False
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    input_filter: 'int'
+                                    on_text_validate: id_cash.focus=True
+                            MDGridLayout:
+                                rows: 1
+                                spacing: 10
+                                padding: 5
+                                MDTextField:
+                                    id: id_cash
+                                    size_hint: 0.25, 1
+                                    multiline: False
+                                    hint_text: app.language['cash']
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    input_filter: 'float'
+                                    on_text_validate: id_product.focus=True
+                                MDTextField:
+                                    id: id_product
+                                    multiline: False
+                                    hint_text: app.language['product']
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                            MDGridLayout:
+                                rows: 1
+                                spacing: 5
+                                padding: [dp(5),dp(20),dp(5),dp(5)]
+                                Check1:
+                                    active: True
+                                    unselected_color: 1,1,1,1
+                                    selected_color: app.green
+                                    on_active: root.check_active(stuff.text1,*args)
+                                Check1:
+                                    unselected_color: 1,1,1,1
+                                    selected_color: app.green
+                                    on_active: root.check_active(food.text1,*args)
+                                Check1:
+                                    unselected_color: 1,1,1,1
+                                    selected_color: app.green
+                                    on_active: root.check_active(beverages.text1,*args)
+                                Check1:
+                                    unselected_color: 1,1,1,1
+                                    selected_color: app.green
+                                    on_active: root.check_active(cigarette.text1,*args)
+                                Check1:
+                                    unselected_color: 1,1,1,1
+                                    selected_color: app.green
+                                    on_active: root.check_active(house.text1,*args)
+                                Check1:
+                                    unselected_color: 1,1,1,1
+                                    selected_color: app.green
+                                    on_active: root.check_active(fuel.text1,*args)
+                            MDGridLayout:
+                                rows: 1
+                                size_hint: 1,0.5
+                                spacing: 5
+                                padding: 5
+                                MDLabel:
+                                    id: stuff
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    font_size: sp(10)
+                                    text: app.language['stuff']
+                                    text1: 'Stuff'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDLabel:
+                                    id: food
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    font_size: sp(10)
+                                    text: app.language['food']
+                                    text1: 'Food'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDLabel:
+                                    id: beverages
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    font_size: sp(10)
+                                    text: app.language['beverages']
+                                    text1: 'Beverages'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDLabel:
+                                    id: cigarette
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    font_size: sp(10)
+                                    text: app.language['cigarette']
+                                    text1: 'Cigarette'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDLabel:
+                                    id: house
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    font_size: sp(10)
+                                    text: app.language['forhouse']
+                                    text1: 'For house'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDLabel:
+                                    id: fuel
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    font_size: sp(10)
+                                    text: app.language['fuel']
+                                    text1: 'Fuel'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                            MDCard:
+                                md_bg_color: 0,0,0,0
+                                elevation: 0
+                                MDGridLayout:
+                                    rows: 1
+                                    Widget:
+                                    MDRaisedButton:
+                                        text: app.language['cardAddButton']
+                                        md_bg_color: app.fg_color
+                                        on_release: 
+                                            root.get_date(id_exp_day.text,id_exp_month.text,id_exp_year.text,id_cash.text,id_product.text)
+                                    Widget:
+                            MDGridLayout:
+                                rows: 1
+                                size_hint: 1,0.3
+
+                    MDCard:
+                        size_hint: 0.95,0.4
+                        pos_hint: {'center_x': 0.5, 'top':0.64}
+                        md_bg_color: 0,0,0,0
+                        elevation: 7
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        MDGridLayout:
+                            rows:5
+                            padding: [dp(10),dp(0),dp(10),dp(10)]
+                            MDGridLayout:
+                                rows:1
+                                spacing: 10
+                                MDLabel:
+                                    text: app.language['from']
+                                    halign: 'left'
+                                    valign: 'middle'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDTextField:
+                                    id: exp_from_day
+                                    multiline: False
+                                    hint_text: app.language['addjobs_adddayhinttext']
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    on_text_validate: exp_from_month.focus=True 
+                                MDTextField:
+                                    id: exp_from_month
+                                    multiline: False
+                                    hint_text: app.language['addjobs_addmonthhinttext']
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    on_text_validate: exp_from_year.focus=True
+                                MDTextField:
+                                    id: exp_from_year
+                                    multiline: False
+                                    hint_text: app.language['addjobs_addyearhinttext']
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    on_text_validate: exp_to_day.focus=True
+                            MDGridLayout:
+                                rows:1
+                                spacing: 10
+                                MDLabel:
+                                    text: app.language['to']
+                                    halign: 'left'
+                                    valign: 'middle'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDTextField:
+                                    id: exp_to_day
+                                    multiline: False
+                                    hint_text: app.language['addjobs_adddayhinttext']
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    on_text_validate: exp_to_month.focus=True
+                                MDTextField:
+                                    id: exp_to_month
+                                    multiline: False
+                                    hint_text: app.language['addjobs_addmonthhinttext']
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                                    on_text_validate: exp_to_year.focus=True
+                                MDTextField:
+                                    id: exp_to_year
+                                    multiline: False
+                                    hint_text: app.language['addjobs_addyearhinttext']
+                                    color_mode: 'custom'
+                                    line_color_focus: 1,1,1,1
+                                    line_color_normal: 1,1,1,1
+                                    current_hint_text_color: 1,1,1,0.5
+                            MDGridLayout:
+                                rows: 1
+                                MDLabel:
+                                    markup: True
+                                    text: app.language['total_spent']
+                                    halign: 'left'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDLabel:
+                                    id: total_spent
+                                    text: '--'
+                                    halign: 'left'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                            MDGridLayout:
+                                rows: 1
+                                MDLabel:
+                                    text: app.language['total_earned']
+                                    halign: 'left'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                                MDLabel:
+                                    id: total_earned
+                                    text: '--'
+                                    halign: 'left'
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,1
+                            MDGridLayout:
+                                rows: 1
+                                MDFloatLayout:
+                                    MDIconButton:
+                                        icon: 'calendar'
+                                        user_font_size: dp(30)
+                                        theme_text_color: 'Custom'
+                                        text_color: 1,1,1,0.8
+                                        pos_hint: {'center_x':0.5 ,'center_y':0.5}
+                                        on_release: root.show_date_picker_first()
+                                MDFloatLayout:
+                                    MDRaisedButton:
+                                        id: calculate_button
+                                        text: app.language['calculateButton']
+                                        pos_hint: {'center_x':0.5 ,'center_y':0.5}
+                                        md_bg_color: app.fg_color
+                                        on_release: root.show_all()
+                                MDFloatLayout:
+                                    MDIconButton:
+                                        icon: 'calendar'
+                                        user_font_size: dp(30)
+                                        theme_text_color: 'Custom'
+                                        text_color: 1,1,1,0.8
+                                        pos_hint: {'center_x':0.5 ,'center_y':0.5}
+                                        on_release: root.show_date_picker_last()
+                    # Export to email card
+                    MDCard:
+                        rows: 1
+                        # cols: 3
+                        size_hint: 0.95, None
+                        height: but_to_export.height*1.5
+                        pos_hint: {'center_x': 0.5, 'top':0.21}
+                        md_bg_color: 1,1,1,0
+                        elevation: 10
+                        padding: [dp(10),dp(10),dp(10),dp(10)]
+                        spacing: dp(5)
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        Widget:
+                        MDRaisedButton:
+                            id: but_to_export
+                            text: app.language['export_to_email']
+                            size_hint: None,None
+                            width: self.width
+                            height: self.height
+                            md_bg_color: app.fg_color
+                            on_release: Factory.Export_Expenses().open()
+                        Widget:
+                    # Remaining cash card
+                    MDCard:
+                        size_hint: 0.95, None
+                        height: but_to_export.height*1.5
+                        pos_hint: {'center_x': 0.5, 'top':0.11}
+                        md_bg_color: 0,0,0,0
+                        elevation: 10
+                        padding: [dp(10),dp(10),dp(10),dp(10)]
+                        spacing: dp(5)
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        Label:
+                            id: id_remaining_cash
+                            text: app.language['remaining_cash']
+
+            Tab:
+                text: app.language['view']
+                MDFloatLayout:
+                    size: root.size
+                    pos: root.pos
+
+                    MDCard:
+                        size_hint: 0.95,0.15
+                        pos_hint: {'center_x': 0.5, 'top':0.97}
+                        md_bg_color: 0,0,0,0
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+
+                        MDGridLayout:
+                            rows: 2
+                            cols: 6
+                            Check3:
+                                unselected_color: 1,1,1,1
+                                selected_color: app.green
+                                on_active: root.add_data('dt','asc')
+                            Check3:
+                                active: True
+                                unselected_color: 1,1,1,1
+                                selected_color: app.green
+                                on_active: root.add_data('dt','desc')
+                            Check3:
+                                unselected_color: 1,1,1,1
+                                selected_color: app.green
+                                on_active: root.add_data('amount','asc')
+                            Check3:
+                                unselected_color: 1,1,1,1
+                                selected_color: app.green
+                                on_active: root.add_data('amount','desc')
+                            Check3:
+                                unselected_color: 1,1,1,1
+                                selected_color: app.green
+                                on_active: root.add_data('product','asc')
+                            Check3:
+                                unselected_color: 1,1,1,1
+                                selected_color: app.green
+                                on_active: root.add_data('product','desc')
+                            MDIcon:
+                                icon: 'sort-calendar-ascending'
+                                halign: 'center'
+                                valign: 'middle'
+                                theme_text_color: 'Custom'
+                                text_color: 1,1,1,1
+                            MDIcon:
+                                icon: 'sort-calendar-descending'
+                                halign: 'center'
+                                valign: 'middle'
+                                theme_text_color: 'Custom'
+                                text_color: 1,1,1,1
+                            MDIcon:
+                                icon: 'sort-numeric-ascending'
+                                halign: 'center'
+                                valign: 'middle'
+                                theme_text_color: 'Custom'
+                                text_color: 1,1,1,1
+                            MDIcon:
+                                icon: 'sort-numeric-descending'
+                                halign: 'center'
+                                valign: 'middle'
+                                theme_text_color: 'Custom'
+                                text_color: 1,1,1,1
+                            MDIcon:
+                                icon: 'order-alphabetical-ascending'
+                                halign: 'center'
+                                valign: 'middle'
+                                theme_text_color: 'Custom'
+                                text_color: 1,1,1,1
+                            MDIcon:
+                                icon: 'order-alphabetical-descending'
+                                halign: 'center'
+                                valign: 'middle'
+                                theme_text_color: 'Custom'
+                                text_color: 1,1,1,1
+                    MDCard:
+                        size_hint: 0.95,0.76
+                        pos_hint: {'center_x': 0.5, 'top':0.79}
+                        md_bg_color: 0,0,0,0
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        RecycleView:
+                            id: exp_rv
+                            size_hint: 1,1
+                            scroll_type: ['bars', 'content']
+                            scroll_wheel_distance: dp(114)
+                            bar_width: dp(15)
+                            viewclass: 'Alin_money'
+
+                            RecycleBoxLayout:
+                                default_size: 1, None
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: 'vertical'
+                                spacing: dp(3)
+                                padding: [5, 5, 5, 5]
+            Tab:
+                text: app.language['search']
+                MDFloatLayout:
+                    size:root.size
+                    pos: root.pos
+                    MDCard:
+                        size_hint: 0.95,0.5
+                        pos_hint: {'center_x':0.5, 'top': 0.97}
+                        md_bg_color: 0,0,0,0
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        MDGridLayout:
+                            rows:2
+                            padding: [20,20,20,20]
+                            MDTextField:
+                                id: exp_search_field
+                                hint_text: app.language['search'].lower()
+                                color_mode: 'custom'
+                                line_color_focus: 1,1,1,1
+                                line_color_normal: 1,1,1,1
+                                current_hint_text_color: 1,1,1,0.5
+                                on_text: root.exp_search(self.text)
+                            RecycleView:
+                                id: search_exp_rv
+                                size_hint: 1,1
+                                scroll_type: ['bars', 'content']
+                                scroll_wheel_distance: dp(114)
+                                bar_width: dp(15)
+                                viewclass: 'Alin_exp'
+
+                                RecycleBoxLayout:
+                                    default_size: 1, None
+                                    default_size_hint: 1, None
+                                    size_hint_y: None
+                                    height: self.minimum_height
+                                    orientation: 'vertical'
+                                    spacing: dp(3)
+                                    padding: [5, 5, 5, 5]
+                    MDCard:
+                        size_hint: 0.95,None
+                        height: exp_search_field_remove.height*2+delete_button_search_exp.height
+                        pos_hint: {'center_x':0.5, 'top': 0.44}
+                        md_bg_color: 1,1,1,0
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        MDGridLayout:
+                            rows: 2
+                            size: self.size
+                            pos: self.pos
+                            padding: [20,5,20,10]
+                            spacing: 20
+                            MDTextField:
+                                id: exp_search_field_remove
+                                hint_text: app.language['idToRemove']
+                                color_mode: 'custom'
+                                line_color_focus: 1,1,1,1
+                                line_color_normal: 1,1,1,1
+                                current_hint_text_color: 1,1,1,0.5
+                                input_filter: 'int'
+                            MDGridLayout:
+                                rows: 1
+                                # size_hint: 1, None
+                                # height: delete_button_search_exp.height
+                                Widget:
+                                MDRaisedButton:
+                                    id: delete_button_search_exp
+                                    text: app.language['remove']
+                                    md_bg_color: app.check_active_color
+                                    on_release: root.remove_exp(exp_search_field_remove.text)
+                                Widget:
+            Tab:
+                text: app.language['edit']
+                MDFloatLayout:
+                    size: root.size
+                    pos: root.pos
+                    MDCard:
+                        # size_hint: 0.95, 0.8
+                        pos_hint: {'center_x': 0.5, 'top': 0.97}
+                        md_bg_color: 0,0,0,0
+                        size_hint: 0.95,None
+                        height: edit_index_exp.height*8
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        MDGridLayout:
+                            cols: 1
+                            padding: [dp(10),0,dp(10),0]
+                            canvas:
+                                Color:
+                                    rgb: app.toolbar_color
+                                RoundedRectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    radius: [dp(10)]
+                            MDGridLayout:
+                                rows: 1
+                                size_hint: 1, None
+                                height: button_arrow_left_exp.height
+                                MDIconButton:
+                                    id: button_arrow_left_exp
+                                    icon: 'arrow-left'
+                                    theme_text_color: "Custom"
+                                    text_color: app.green
+                                    disabled: True
+                                    on_release: exp_nr_to_edit.text=str(int(exp_nr_to_edit.text)-1)
+
+                                MDTF:
+                                    id: exp_nr_to_edit
+                                    text: ''
+                                    input_filter: 'int'
+                                    halign: 'center'
+                                    hint_text: '{} {}-{} {}'.format(app.language['first'],root.first_exp,app.language['last'], root.last_exp)
+                                    on_text: root.add_to_fields_exp()
+                                        
+                                MDIconButton:
+                                    id: button_arrow_right_exp
+                                    icon: 'arrow-right'
+                                    theme_text_color: "Custom"
+                                    text_color: app.green
+                                    disabled: True
+                                    on_release: exp_nr_to_edit.text=str(int(exp_nr_to_edit.text)+1)
+                            MDGridLayout:
+                                cols: 1
+                                size_hint: 1,None
+                                height: edit_index_exp.height*6
+                                MDTF:
+                                    id: edit_index_exp
+                                    hint_text: 'index'
+                                    max_text_length: 10
+                                    readonly: True
+                                MDGridLayout:
+                                    rows: 1
+                                    spacing: dp(20)
+                                    MDTF:
+                                        id: edit_day_exp
+                                        hint_text: app.language['addjobs_adddayhinttext']
+                                        size_hint: None, None
+                                        width: dp(50)
+                                        height: self.height
+                                        input_filter: 'int'
+                                    MDTF:
+                                        id: edit_month_exp
+                                        hint_text: app.language['addjobs_addmonthhinttext']
+                                        size_hint: None, None
+                                        width: dp(50)
+                                        height: self.height
+                                        input_filter: 'int'
+                                    MDTF:
+                                        id: edit_year_exp
+                                        hint_text: app.language['addjobs_addyearhinttext']
+                                        size_hint: None, None
+                                        width: dp(100)
+                                        height: self.height
+                                        input_filter: 'int'
+                                    Widget:
+                                MDTF:
+                                    id: edit_amount_exp
+                                    hint_text: app.language['addjobs_addamount']
+                                    input_filter: 'float'
+                                MDTF:
+                                    id: edit_product_exp
+                                    hint_text: app.language['product']
+                                MDTF:
+                                    id: edit_category_exp
+                                    text: str(root.category)
+                                    hint_text: app.language['category']
+                                    readonly: True
+                                MDGridLayout:
+                                    rows: 2
+                                    MDGridLayout:
+                                        rows: 1
+                                        spacing: 5
+                                        padding: 5
+                                        Check2:
+                                            active: True if edit_category_exp.text==stuff_edit.text else False
+                                            unselected_color: 1,1,1,1
+                                            selected_color: app.green
+                                            on_active: root.check_active(stuff_edit.text,*args)
+                                        Check2:
+                                            active: True if edit_category_exp.text==food_edit.text else False
+                                            unselected_color: 1,1,1,1
+                                            selected_color: app.green
+                                            on_active: root.check_active(food_edit.text,*args)
+                                        Check2:
+                                            active: True if edit_category_exp.text==beverages_edit.text else False
+                                            unselected_color: 1,1,1,1
+                                            selected_color: app.green
+                                            on_active: root.check_active(beverages_edit.text,*args)
+                                        Check2:
+                                            active: True if edit_category_exp.text==cigarette_edit.text else False
+                                            unselected_color: 1,1,1,1
+                                            selected_color: app.green
+                                            on_active: root.check_active(cigarette_edit.text,*args)
+                                        Check2:
+                                            active: True if edit_category_exp.text==house_edit.text else False
+                                            unselected_color: 1,1,1,1
+                                            selected_color: app.green
+                                            on_active: root.check_active(house_edit.text,*args)
+                                        Check2:
+                                            active: True if edit_category_exp.text==fuel_edit.text else False
+                                            unselected_color: 1,1,1,1
+                                            selected_color: app.green
+                                            on_active: root.check_active(fuel_edit.text,*args)
+                                    MDGridLayout:
+                                        rows: 1
+                                        size_hint: 1,0.5
+                                        spacing: 5
+                                        padding: 5
+                                        MDLabel:
+                                            id: stuff_edit
+                                            halign: 'center'
+                                            valign: 'middle'
+                                            font_size: sp(10)
+                                            text: app.language['stuff']
+                                            theme_text_color: 'Custom'
+                                            text_color: 1,1,1,1
+                                        MDLabel:
+                                            id: food_edit
+                                            halign: 'center'
+                                            valign: 'middle'
+                                            font_size: sp(10)
+                                            text: app.language['food']
+                                            theme_text_color: 'Custom'
+                                            text_color: 1,1,1,1
+                                        MDLabel:
+                                            id: beverages_edit
+                                            halign: 'center'
+                                            valign: 'middle'
+                                            font_size: sp(10)
+                                            text: app.language['beverages']
+                                            theme_text_color: 'Custom'
+                                            text_color: 1,1,1,1
+                                        MDLabel:
+                                            id: cigarette_edit
+                                            halign: 'center'
+                                            valign: 'middle'
+                                            font_size: sp(10)
+                                            text: app.language['cigarette']
+                                            theme_text_color: 'Custom'
+                                            text_color: 1,1,1,1
+                                        MDLabel:
+                                            id: house_edit
+                                            halign: 'center'
+                                            valign: 'middle'
+                                            font_size: sp(10)
+                                            text: app.language['forhouse']
+                                            theme_text_color: 'Custom'
+                                            text_color: 1,1,1,1
+                                        MDLabel:
+                                            id: fuel_edit
+                                            halign: 'center'
+                                            valign: 'middle'
+                                            font_size: sp(10)
+                                            text: app.language['fuel']
+                                            theme_text_color: 'Custom'
+                                            text_color: 1,1,1,1
+
+                            
+                            MDGridLayout:
+                                rows: 1
+                                size_hint: 1,None
+                                height: save_button_edit_exp.height
+                                spacing: dp(5)
+                                padding: [dp(5)]
+                                Label:
+                                    id: edit_label_exp
+                                    text: app.language['lastSaved']
+                                    size_hint: 1, None
+                                    height: self.texture_size[1]*2
+                                    halign: 'center'
+                                    valign: 'middle'
+                                MDRaisedButton:
+                                    id: save_button_edit_exp
+                                    text: app.language['save']
+                                    theme_text_color: 'Custom'
+                                    text_color: 1,1,1,0.8
+                                    md_bg_color: app.bg_color
+                                    on_release: root.save_edited_jobs(edit_day_exp.text, edit_month_exp.text, edit_year_exp.text, edit_amount_exp.text, edit_product_exp.text)
+
+            Tab:
+                text: app.language['all']
+                
+                GridLayout:
+                    cols: 1
+                    size_hint: 1,1
+                    padding: dp(20)
+                    spacing: dp(20)
+                    MDCard:
+                        size_hint: 1, 0.7
+                        md_bg_color: 1,1,1,0
+                        canvas:
+                            Color:
+                                rgb: app.toolbar_color
+                            RoundedRectangle:
+                                size: self.size
+                                pos: self.pos
+                                radius: [dp(10)]
+                        RecycleView:
+                            id:all_rv
+                            scroll_type: ['bars', 'content']
+                            scroll_wheel_distance: dp(50)
+                            bar_width: dp(15) # latimea la scrollbar
+                            viewclass: 'All_expenses'
+
+                            RecycleBoxLayout:
+                                default_size: 1, None
+                                default_size_hint: 1, None
+                                size_hint_y: None
+                                height: self.minimum_height
+                                orientation: 'vertical'
+                                spacing: dp(3)
+                    MDGridLayout:
+                        cols: 3
+                        rows: 1
+                        orientation: 'horizontal'
+                        size_hint: 1, None
+                        height: dp(50)
+                        padding: dp(10)
+                        spacing: dp(10)
+                        Button:
+                            text: app.language['year']
+                            background_normal: ''
+                            background_color: app.bg_color
+                            on_release: root.separate('year')
+                        Button:
+                            background_normal: ''
+                            background_color: app.bg_color
+                            text: app.language['month']
+                            on_release: root.separate('month')
+                        Button:
+                            text: app.language['day']
+                            background_normal: ''
+                            background_color: app.bg_color
+                            on_release: root.separate('day')
+
+
+
+# popup - export to csv
+<Export_Expenses>:
+    title: app.language['export_to_email']
+    size_hint: 1, None
+    height: id_exp_mail.height*7
+    background_color: (0,0,0, 0.85)
+    auto_dismiss: False
+    MDGridLayout:
+        rows: 7
+        cols: 1
+        canvas:
+            Color:
+                rgb: app.toolbar_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        MDTF:
+            id: id_exp_mail
+            hint_text: app.language['type_email_hint']
+            text: 'your email here'
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+            on_text_validate: id_exp_pass.focus=True
+
+        MDTF:
+            id: id_exp_pass
+            hint_text: app.language['type_password_hint']
+            text: 'your password here'
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+            on_text_validate: id_exp_sendto.focus=True
+        
+        MDTF:
+            id: id_exp_sendto
+            hint_text: app.language['send_to']
+            text: 'send email to'
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+            on_text_validate: id_exp_subject.focus=True
+
+        MDTF:
+            id: id_exp_subject
+            hint_text: app.language['subject']
+            text: app.language['expensesBackUpComplete']
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+            on_text_validate: id_exp_content.focus=True
+
+        MDTF:
+            id: id_exp_content
+            hint_text: app.language['content']
+            text: 'Nothing to see here !'
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 1,1,1,1
+            line_color_normal: 1,1,1,1
+            current_hint_text_color: 1,1,1,0.5
+        MDGridLayout:
+            rows: 1
+            size_hint: 1, None
+            height: self.minimum_height
+            padding: '10dp',0
+            MDRaisedButton:
+                id: id_but_exp
+                text: app.language['export']
+                on_release: root.export_to_file(id_exp_mail.text,id_exp_pass.text,id_exp_sendto.text, id_exp_subject.text, id_exp_content.text)
+            BoxLayout:
+                orientation: 'vertical'
+                CheckBox:
+                    id: check_db_exp
+                    active: False
+                Label:
+                    text: app.language['include_DB']
+            MDRectangleFlatButton:
+                text: app.language['close']
+                pos_hint: {'right':1, 'y':0}
+                on_release: root.dismiss()
